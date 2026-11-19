@@ -1,0 +1,18 @@
+# sleutels: nooit in git
+.env
+
+# lokale instellingen van Claude Code (met paden op deze computer)
+.claude/
+
+# afhankelijkheden en bouwresultaat
+node_modules/
+dist/
+.netlify/
+
+# opgehaalde gegevens en caches; GitHub Actions bewaart die zelf tussen rondes
+data/
+
+# betaald lettertype: licentie geldt niet voor een openbare repository
+fonts/busorama.*
+
+*.log

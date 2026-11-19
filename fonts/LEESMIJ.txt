@@ -1,0 +1,29 @@
+Lettertype voor draaiter
+======================
+
+De app gebruikt ITC Busorama zodra hier een fontbestand staat met een van deze namen:
+
+  busorama.woff2   (voorkeur)
+  busorama.woff
+  busorama.ttf
+  busorama.otf
+
+ITC Busorama is een betaald lettertype van ITC/Monotype. Voor gebruik op een website heb je
+een webfontlicentie nodig (te koop via onder meer MyFonts of Monotype). Een bureaubladlicentie
+alleen is niet genoeg voor een app die anderen kunnen openen.
+
+Herstart de server na het neerzetten van het bestand. Staat er niets, dan valt de app terug
+op de standaardlettertypen.
+
+Vervanger: Poiret One
+---------------------
+poiret-one.woff2 is het gratis lettertype dat de app gebruikt zolang Busorama ontbreekt.
+Ontworpen door Denis Masharov, vrijgegeven onder de SIL Open Font License 1.1; je mag het
+gebruiken en meeleveren, ook commercieel. Opgehaald bij Google Fonts en hier zelf gehost,
+zodat bezoekers geen verbinding met Google maken.
+
+Lopende tekst: Jost
+-------------------
+jost.woff2 is het lettertype voor alles behalve titels en tijden. Geometrisch, in dezelfde
+hoek als Poiret One, maar met gewone diktes en daardoor rustiger te lezen. Ontworpen door
+Owen Earl (indestructible type*), SIL Open Font License 1.1. Ook zelf gehost.

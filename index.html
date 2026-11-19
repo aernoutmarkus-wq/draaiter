@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#150a28">
+  <title>draaiter — wat draait er zo</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="font.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <img class="logo" src="logo.svg" alt="" width="40" height="40">
+      <h1>draaiter</h1>
+      <p class="tagline">De eerstvolgende film bij jou in de buurt.</p>
+    </div>
+
+    <div class="where">
+      <span class="pin" aria-hidden="true">●</span>
+      <span id="place">Locatie zoeken</span>
+      <label class="sr-only" for="city">Kies een stad</label>
+      <select id="city"></select>
+      <button id="locate" type="button" class="ghost" title="Gebruik mijn locatie">Mijn locatie</button>
+    </div>
+
+    <div class="when-bar" role="group" aria-label="Vanaf wanneer">
+      <div id="days" class="seg days" role="group" aria-label="Dag"></div>
+    </div>
+
+    <div class="when-bar" role="group" aria-label="Vanaf hoe laat">
+      <button type="button" class="chip step" data-add="-30" aria-label="Een half uur eerder">− 30 min</button>
+      <label class="sr-only" for="time">Vanaf tijd</label>
+      <select id="time"></select>
+      <button type="button" class="chip step" data-add="30" aria-label="Een half uur later">+ 30 min</button>
+      <span id="presets" class="presets" hidden></span>
+      <button type="button" class="chip now on" id="now">Nu</button>
+    </div>
+
+    <div id="cats" class="cats" role="group" aria-label="Soort">
+      <button type="button" class="chip on" data-cat="">Alles</button>
+      <button type="button" class="chip" data-cat="kids">Kinderfilms</button>
+      <button type="button" class="chip" data-cat="filmhuis">Filmhuis</button>
+      <button type="button" class="chip" data-cat="pathe">Pathé</button>
+    </div>
+
+    <div id="cinemas" class="cinemas" role="group" aria-label="Bioscopen in de buurt" hidden></div>
+  </header>
+
+  <main>
+    <p id="demo" class="demo" hidden>Demodata: het programma en de scores zijn voorbeelden, geen actuele tijden.</p>
+    <p id="note" class="note" hidden></p>
+    <ol id="list" class="list"></ol>
+    <button id="more" type="button" class="more-btn" hidden>Toon meer</button>
+  </main>
+
+  <dialog id="detail" class="detail" aria-labelledby="detail-title"></dialog>
+
+  <footer class="credits">
+    <p>Aanvangstijden komen van de bioscopen zelf en van Filmladder. Controleer de tijd bij het bestellen.</p>
+    <p id="tmdb" hidden>Filmgegevens en beeld: TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

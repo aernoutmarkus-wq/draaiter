@@ -1,0 +1,62 @@
+# Haalt elke zes uur het programma op en zet de site opnieuw op Netlify.
+# Benodigde geheimen (Settings > Secrets and variables > Actions):
+#   NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, TMDB_API_KEY, OMDB_API_KEY
+
+name: Programma ophalen en uitrollen
+
+on:
+  schedule:
+    - cron: "17 */6 * * *" # 00:17, 06:17, 12:17 en 18:17 UTC
+  workflow_dispatch: {}     # handmatig starten via het tabblad Actions
+
+concurrency:
+  group: draaiter-update
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # De map data/ (programma, filmgegevens, TMDB-cache) gaat van ronde naar ronde mee.
+      # Zonder vorige ronde duurt de eerste keer langer: alles wordt dan opnieuw opgehaald.
+      - name: Vorige gegevens terugzetten
+        uses: actions/cache/restore@v4
+        with:
+          path: data
+          key: draaiter-data-${{ github.run_id }}
+          restore-keys: draaiter-data-
+
+      - name: Programma ophalen
+        run: node scrape.js
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+
+      - name: Gegevens bewaren voor de volgende ronde
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data
+          key: draaiter-data-${{ github.run_id }}
+
+      - name: Website klaarzetten
+        run: node build.js
+
+      - name: Uitrollen naar Netlify
+        run: npx --yes netlify-cli@27.16.2 deploy --prod --dir=dist --functions=netlify/functions --message "Programma van run ${{ github.run_number }}"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
