@@ -540,7 +540,20 @@ function openDetail(id) {
   loadOthers(s);
 }
 
+// Een klik op KOOP TICKETS telt als gebeurtenis in GoatCounter, per bioscoop.
+// Alleen de bioscoop en de film, nooit iets over de bezoeker. Zonder GoatCounter (adblocker, localhost) gebeurt er niets.
+function countTicketClick(s) {
+  try {
+    window.goatcounter?.count?.({
+      path: `tickets/${s.cinema.id}`,
+      title: `${s.cinema.name}: ${s.film.title}`,
+      event: true,
+    });
+  } catch {}
+}
+
 el.detail.addEventListener("click", (e) => {
+  if (e.target.closest(".buy") && shown) return countTicketClick(shown); // de link zelf opent gewoon
   // klik naast de pop-up (op de donkere achtergrond) of op het kruisje sluit hem
   if (e.target === el.detail || e.target.closest("[data-close]")) return closeDetail();
   const pick = e.target.closest("[data-pick]");
